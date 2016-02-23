@@ -13,9 +13,9 @@ Matrix<T, rows, columns>::Matrix() {
 
 template<typename T, unsigned int rows, unsigned int columns>
 Matrix<T, rows, columns>::Matrix(T r[rows*columns]) {
-	for (int i = 0; i < rows; i++)
-		for (int j = 0; j < columns; j++)
-			data[i][j] = r[i*(rows + 1) + j];
+	for (int j = 0; j < columns; j++)
+		for (int i = 0; i < rows; i++)
+			data[i][j] = r[i*(columns) + j];
 }
 
 template<typename T, unsigned int rows, unsigned int columns>
@@ -84,12 +84,11 @@ Matrix<T, rows, columns> Matrix<T, rows, columns>::getEliminationMatrix() {
 
 	cout << endl << endl;
 
-	//Scale for readability
-	for (int j = 0; j < columns; j++)
-		for (int i = j; i < rows; i++) {
-			T temp = tempMat.data[j][j];
-			for (int k = 0; k < columns; k++)
-				tempMat.data[i][k] /= temp;
+	//Scale
+	
+		for (int i = 0; i < rows; i++) {
+			T temp = tempMat.data[i][i];
+				tempMat.data[i][i] = 1/temp;
 		}
 	return result;
 }
@@ -120,7 +119,7 @@ Matrix<T, rows, columns> Matrix<T, rows, columns>::rref() {
 		cout << "-------";
 
 	cout << endl << endl;
-
+	
 	//Scale for readability
 	for (int j = 0; j < columns; j++)
 		for (int i = j; i < rows; i++) {
